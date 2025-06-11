@@ -32,7 +32,7 @@ Built with **React** and powered by **Appwrite** for backend services such as au
 
 1. Clone the repository
 ```bash```
-git clone https://github.com/yourusername/farmer-marketplace.git
+git clone https://github.com/Mohit-004/farmer-marketplace.git
 cd farmer-marketplace
 
 2. Install dependencies
