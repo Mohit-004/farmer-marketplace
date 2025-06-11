@@ -76,6 +76,6 @@ Create a Project
    
 - Copy the required IDs and add them to your .env file
 
-##Contributing
+*Contributing
 Contributions are welcome!
 Feel free to fork this repository and submit a pull request.
