@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { AuthContext } from "../context/AuthContext";  // ✅ Use AuthContext
+import { AuthContext } from "../context/AuthContext";  
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,7 +10,7 @@ const Login = () => {
     e.preventDefault();
     
     try {
-      await login(email, password);   // ✅ Navigation handled in AuthContext
+      await login(email, password);   
     } catch (error) {
       console.error("Login failed:", error);
       alert("Invalid credentials, please try again.");

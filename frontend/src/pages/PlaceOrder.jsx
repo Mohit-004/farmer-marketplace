@@ -18,10 +18,10 @@ const PlaceOrder = () => {
     email: "",
     address: "",
     phone: "",
-    quantity: 1,   // ✅ Added quantity field
+    quantity: 1,   
   });
 
-  // ✅ Fetch current logged-in customer ID
+  //Fetch current logged-in customer ID
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -35,7 +35,7 @@ const PlaceOrder = () => {
     fetchUser();
   }, []);
 
-  // ✅ Update total price dynamically based on quantity
+  //Update total price dynamically based on quantity
   useEffect(() => {
     if (product && shippingDetails.quantity > 0) {
       setTotalPrice(product.price * shippingDetails.quantity);
@@ -56,11 +56,11 @@ const PlaceOrder = () => {
     );
   }
 
-  // ✅ Handle form input changes
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // ✅ Update quantity properly
+
     const updatedValue = name === "quantity" ? Math.max(1, parseInt(value)) : value;
 
     setShippingDetails((prev) => ({
@@ -69,7 +69,7 @@ const PlaceOrder = () => {
     }));
   };
 
-  // ✅ Handle Order Placement (Appwrite only)
+  
   const handlePlaceOrder = async () => {
     if (
       !shippingDetails.fullName ||
@@ -100,7 +100,7 @@ const PlaceOrder = () => {
     };
 
     try {
-      // ✅ Store order in Appwrite
+
       await databases.createDocument(
         DATABASE_ID,
         ORDERS_COLLECTION_ID,
@@ -153,7 +153,7 @@ const PlaceOrder = () => {
 
               <textarea name="address" placeholder="Shipping Address" value={shippingDetails.address} onChange={handleChange} className="w-full border p-3 rounded-lg" required />
 
-              {/* ✅ Quantity Field */}
+          
               <div className="flex items-center space-x-4">
                 <label className="text-lg font-semibold">Quantity:</label>
                 <input

@@ -8,7 +8,6 @@ const ProductForm = ({ initialData = null }) => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  // ✅ State for product form
   const [formData, setFormData] = useState(
     initialData || {
       title: "",
@@ -19,11 +18,10 @@ const ProductForm = ({ initialData = null }) => {
     }
   );
 
-  const [categories, setCategories] = useState([]);  // ✅ State to store categories
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // ✅ Fetch categories from Appwrite on component mount
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -31,14 +29,14 @@ const ProductForm = ({ initialData = null }) => {
           DATABASE_ID,
           CATEGORIES_COLLECTION_ID,
           [
-            Query.orderAsc("name")  // 🔥 Sort categories by name
+            Query.orderAsc("name")
           ]
         );
 
         setCategories(response.documents);
         setLoading(false);
       } catch (error) {
-        console.error("❌ Failed to fetch categories:", error);
+        console.error("Failed to fetch categories:", error);
         setError("Failed to load categories");
         setLoading(false);
       }
@@ -47,12 +45,10 @@ const ProductForm = ({ initialData = null }) => {
     fetchCategories();
   }, []);
 
-  // ✅ Handle form changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // ✅ Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -63,7 +59,7 @@ const ProductForm = ({ initialData = null }) => {
       }
       navigate("/farmer-dashboard");
     } catch (error) {
-      console.error("❌ Error saving product:", error);
+      console.error("Error saving product:", error);
     }
   };
 
@@ -74,7 +70,6 @@ const ProductForm = ({ initialData = null }) => {
           {id ? "Edit Product" : "Add Product"}
         </h2>
 
-        {/* ✅ Product Fields */}
         <input
           name="title"
           placeholder="Title"
@@ -107,7 +102,6 @@ const ProductForm = ({ initialData = null }) => {
           className="w-full p-2 border rounded mb-4"
         />
 
-        {/* ✅ Category Dropdown */}
         {loading ? (
           <p>Loading categories...</p>
         ) : (

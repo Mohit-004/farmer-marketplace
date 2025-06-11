@@ -5,7 +5,6 @@ import { databases, DATABASE_ID, USERS_COLLECTION_ID } from "../utils/appwrite";
 const Payment = ({ product, customer }) => {
   const [farmerPaymentLink, setFarmerPaymentLink] = useState(null);
 
-  // ✅ Fetch Farmer's Razorpay Link
   useEffect(() => {
     const fetchFarmerPaymentLink = async () => {
       try {
@@ -19,21 +18,20 @@ const Payment = ({ product, customer }) => {
           const farmer = response.documents[0];
           setFarmerPaymentLink(farmer.razorpayLink);
         } else {
-          console.error("❌ Farmer not found.");
+          console.error("Farmer not found.");
         }
       } catch (error) {
-        console.error("❌ Error fetching farmer's payment link:", error);
+        console.error("Error fetching farmer's payment link:", error);
       }
     };
 
     fetchFarmerPaymentLink();
   }, [product.farmerId]);
 
-  // ✅ Razorpay Payment Handler
   const handlePayment = async () => {
     try {
       const orderResponse = await axios.post("http://localhost:5000/api/create-order", {
-        amount: product.price * 100,   // Razorpay expects amount in paisa
+        amount: product.price * 100,
         currency: "INR",
         receipt: `receipt_${Date.now()}`
       });
@@ -48,9 +46,8 @@ const Payment = ({ product, customer }) => {
         name: "Farmer Marketplace",
         description: `Payment for ${product.title}`,
         handler: async (response) => {
-          console.log("✅ Payment Successful:", response);
+          console.log("Payment Successful:", response);
 
-          // ✅ Verify payment on backend
           await axios.post("http://localhost:5000/api/verify-payment", {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
@@ -61,8 +58,7 @@ const Payment = ({ product, customer }) => {
             totalPrice: product.price
           });
 
-          alert("✅ Payment verified and order placed!");
-
+          alert("Payment verified and order placed!");
         },
         prefill: {
           name: customer.fullName,
@@ -77,7 +73,7 @@ const Payment = ({ product, customer }) => {
       const razorpay = new window.Razorpay(options);
       razorpay.open();
     } catch (error) {
-      console.error("❌ Payment failed:", error);
+      console.error("Payment failed:", error);
       alert("Payment failed. Please try again.");
     }
   };

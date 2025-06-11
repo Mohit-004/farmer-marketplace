@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCustomerOrders } from "../utils/appwrite";  // ✅ Import fetch function
+import { getCustomerOrders } from "../utils/appwrite";  
 import { FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -8,7 +8,7 @@ const MyOrders = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // ✅ Fetch customer orders on component mount
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -41,7 +41,7 @@ const MyOrders = () => {
           {orders.map((order) => (
             <div key={order.$id} className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition">
               
-              {/* ✅ Display Order Info */}
+              {/* Display Order Info */}
               <h2 className="text-xl font-bold text-gray-800">
                 Order by: <span className="text-green-600">{order.customerName}</span>
               </h2>

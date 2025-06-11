@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { databases, DATABASE_ID, CATEGORIES_COLLECTION_ID, ID } from "../utils/appwrite";
 import { FaPlus, FaSpinner } from "react-icons/fa";
-import { Query } from "appwrite";  // ✅ Import Query module
+import { Query } from "appwrite";
 
 const AddCategoryModal = ({ isOpen, onClose, onCategoryAdded }) => {
   const [name, setName] = useState("");
@@ -11,29 +11,24 @@ const AddCategoryModal = ({ isOpen, onClose, onCategoryAdded }) => {
   const [error, setError] = useState("");
   const [nextCategoryId, setNextCategoryId] = useState(1);
 
-  // ✅ Fetch latest category ID correctly
   useEffect(() => {
     const fetchLatestCategoryId = async () => {
       try {
         const response = await databases.listDocuments(
           DATABASE_ID,
           CATEGORIES_COLLECTION_ID,
-          [
-            Query.orderDesc("createdAt"),   // ✅ Correct Query syntax
-            Query.limit(1)                  // ✅ Limit to 1 document
-          ]
+          [Query.orderDesc("createdAt"), Query.limit(1)]
         );
-
         if (response.documents.length > 0) {
           const lastCategory = response.documents[0];
           const lastId = parseInt(lastCategory.categoryId, 10);
-          setNextCategoryId(lastId + 1);    // ✅ Auto-increment ID
+          setNextCategoryId(lastId + 1);
         } else {
-          setNextCategoryId(1);             // ✅ Start at 1 if no categories exist
+          setNextCategoryId(1);
         }
       } catch (error) {
         console.error("❌ Failed to fetch latest category ID:", error);
-        setNextCategoryId(1);               // ✅ Fallback ID
+        setNextCategoryId(1);
       }
     };
 
@@ -81,14 +76,11 @@ const AddCategoryModal = ({ isOpen, onClose, onCategoryAdded }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white w-full max-w-lg rounded-lg shadow-lg p-8">
-
-        {/* ✅ Modal Header */}
         <div className="flex justify-between items-center border-b pb-4">
           <h2 className="text-2xl font-bold">Add New Category</h2>
           <button onClick={onClose} className="text-gray-600 hover:text-gray-900">✖️</button>
         </div>
 
-        {/* ✅ Form Fields */}
         <div className="mt-4">
           <label className="block font-medium">Category ID:</label>
           <input
@@ -130,7 +122,6 @@ const AddCategoryModal = ({ isOpen, onClose, onCategoryAdded }) => {
           {error && <p className="text-red-600 mt-2">{error}</p>}
         </div>
 
-        {/* ✅ Modal Actions */}
         <div className="flex justify-end mt-6">
           <button
             onClick={onClose}

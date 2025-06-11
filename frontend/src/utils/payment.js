@@ -1,10 +1,10 @@
 import axios from "axios";
 
-// ✅ Razorpay Config
+// Razorpay Config
 const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZORPAY_KEY_ID;
 const RAZORPAY_KEY_SECRET = import.meta.env.VITE_RAZORPAY_KEY_SECRET;
 
-// ✅ Create order on Razorpay
+// Create order on Razorpay
 export const createRazorpayOrder = async (amount, currency = "INR") => {
   try {
     const response = await axios.post("https://api.razorpay.com/v1/orders", {

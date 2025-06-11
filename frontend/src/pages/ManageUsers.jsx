@@ -8,7 +8,7 @@ const ManageUsers = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // ✅ Fetch users from Appwrite
+  //Fetch users from Appwrite
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -29,7 +29,7 @@ const ManageUsers = () => {
     fetchUsers();
   }, []);
 
-  // ✅ Delete user function
+  //Delete user function
   const handleDelete = async (userId) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
@@ -50,7 +50,7 @@ const ManageUsers = () => {
 
       <div className="flex-1 bg-gray-100">
         
-        {/* ✅ Admin Navbar */}
+        {/* Admin Navbar */}
         <AdminNavbar />
 
         <div className="p-8">
@@ -64,7 +64,7 @@ const ManageUsers = () => {
           ) : (
             <div className="overflow-x-auto bg-white rounded-lg shadow-lg p-6">
 
-              {/* ✅ Table */}
+            
               <table className="w-full text-sm text-left text-gray-700">
                 <thead className="text-xs uppercase bg-gray-200 text-gray-600">
                   <tr>

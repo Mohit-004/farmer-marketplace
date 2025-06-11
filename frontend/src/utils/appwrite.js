@@ -1,6 +1,6 @@
 import { Client, Databases, Account, ID, Query, Permission, Role, Storage } from "appwrite";
 
-// ✅ Fetch IDs from .env
+//Fetch IDs from .env
 const PROJECT_ID = import.meta.env.VITE_APPWRITE_PROJECT_ID;
 const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 const PRODUCTS_COLLECTION_ID = import.meta.env.VITE_APPWRITE_PRODUCTS_COLLECTION_ID;
@@ -18,12 +18,11 @@ const storage = new Storage(client);
 
 console.log("🔥 Appwrite initialized with project:", PROJECT_ID);
 
-// ✅ Helper function for logging errors
 const logError = (message, error) => {
     console.error(`❌ ${message}:`, error.message || error);
 };
 
-// ✅ 🔥 **Validate Session Before Making Requests**
+
 const validateSession = async () => {
     try {
         const session = await account.getSession("current");
@@ -38,7 +37,7 @@ const validateSession = async () => {
 export const getCurrentUserId = async () => {
   try {
       const session = await account.get();
-      return session.$id;  // ✅ Return Farmer ID
+      return session.$id;  //Return Farmer ID
   } catch (error) {
       console.error("❌ Failed to fetch current user:", error);
       throw error;
@@ -55,7 +54,7 @@ export const createProduct = async (productData, imageFile) => {
         throw new Error("Invalid file format. Please select a valid image.");
       }
   
-      // ✅ Upload image to Appwrite storage
+      // Upload image to Appwrite storage
       const uploadedFile = await storage.createFile(
         BUCKET_ID,
         ID.unique(),      // Generate unique ID for image
@@ -64,26 +63,26 @@ export const createProduct = async (productData, imageFile) => {
   
       console.log("✅ Image uploaded:", uploadedFile);
   
-      // ✅ Generate the image URL
+      // Generate the image URL
       const imageUrl = storage.getFileView(BUCKET_ID, uploadedFile.$id);
   
       console.log("🌟 Image URL:", imageUrl);
   
-      // ✅ Generate unique productId
+      // Generate unique productId
       const productId = ID.unique();
   
-      // ✅ Get the current farmerId (authenticated user)
+      // Get the current farmerId (authenticated user)
       const session = await account.get();
-      const farmerId = session.$id;   // ✅ Farmer's ID from session
+      const farmerId = session.$id;   // Farmer's ID from session
   
-      // ✅ Create product with farmerId
+      // Create product with farmerId
       const product = await databases.createDocument(
         DATABASE_ID,
         PRODUCTS_COLLECTION_ID,
         productId,
         {
-          productId: productId,               // ✅ Add productId
-          farmerId: farmerId,                 // ✅ Add farmerId
+          productId: productId,               // Add productId
+          farmerId: farmerId,                 // Add farmerId
           title: productData.title,
           description: productData.description,
           price: productData.price,
@@ -115,18 +114,18 @@ export const createProduct = async (productData, imageFile) => {
         PRODUCTS_COLLECTION_ID
       );
   
-      // ✅ Generate image URLs dynamically using `fileId`
+      //Generate image URLs dynamically using `fileId`
       const products = response.documents.map((product) => {
         let imageUrl = "/placeholder.png";  // Default image fallback
   
-        // 🔥 If `fileId` exists, generate image URL dynamically
+       
         if (product.fileId) {
           imageUrl = `https://cloud.appwrite.io/v1/storage/buckets/${BUCKET_ID}/files/${product.fileId}/view?project=${PROJECT_ID}`;
         }
   
         return {
           ...product,
-          imageUrl: imageUrl  // ✅ Store image URL dynamically
+          imageUrl: imageUrl  //Store image URL dynamically
         };
       });
   
@@ -140,7 +139,7 @@ export const createProduct = async (productData, imageFile) => {
   };
   
 
-// 🔥 **Update Product**
+// Update Product
 export const updateProduct = async (id, updatedData) => {
     try {
         if (!(await validateSession())) {
@@ -170,13 +169,13 @@ export const deleteProduct = async (id, fileId) => {
         throw new Error("Unauthorized: Please log in first.");
       }
   
-      // ✅ Delete the image from the bucket
+      // Delete the image from the bucket
       if (fileId) {
         await storage.deleteFile(BUCKET_ID, fileId);
         console.log("✅ Image deleted:", fileId);
       }
   
-      // ✅ Delete the product document
+      // Delete the product document
       await databases.deleteDocument(DATABASE_ID, PRODUCTS_COLLECTION_ID, id);
       console.log("✅ Product deleted:", id);
   
@@ -187,7 +186,7 @@ export const deleteProduct = async (id, fileId) => {
   };
   
 
-// 🔥 **Get Categories**
+//Get Categories
 export const getCategories = async () => {
     try {
         const response = await databases.listDocuments(
@@ -210,7 +209,7 @@ export const getCategories = async () => {
     }
 };
 
-// ✅ Get farmer products with safe handling
+// Get farmer products
 export const getFarmerProducts = async () => {
     try {
       const response = await databases.listDocuments(
@@ -220,12 +219,12 @@ export const getFarmerProducts = async () => {
   
       console.log("✅ Products fetched from Appwrite:", response);
   
-      // ✅ Ensure the correct response structure
+      // Ensure the correct response structure
       if (response && Array.isArray(response.documents)) {
-        return response;  // ✅ Valid response
+        return response;  
       } else {
         console.warn("⚠️ Invalid or empty response structure.");
-        return { documents: [] };  // 🔥 Return empty array if invalid
+        return { documents: [] };  
       }
     } catch (error) {
       console.error("❌ Failed to fetch farmer products:", error);
@@ -233,10 +232,10 @@ export const getFarmerProducts = async () => {
     }
   };
 
-// 🔥 **Get Farmer-Specific Orders**
+// Get Farmer-Specific Orders
 export const getFarmerOrders = async () => {
     try {
-        // ✅ Get the current logged-in farmer's ID
+        // Get the current logged-in farmer's ID
         const user = await getUserProfile();
         const farmerId = user?.userId;
 
@@ -244,10 +243,10 @@ export const getFarmerOrders = async () => {
             throw new Error("Failed to identify farmer.");
         }
 
-        // ✅ Add the missing ORDERS_COLLECTION_ID
+        // Add the missing ORDERS_COLLECTION_ID
         const response = await databases.listDocuments(
             DATABASE_ID,
-            ORDERS_COLLECTION_ID,                // ✅ Add the missing collection ID
+            ORDERS_COLLECTION_ID,                
             [Query.equal("farmerId", farmerId)]
         );
 
@@ -262,8 +261,8 @@ export const getFarmerOrders = async () => {
 
 
 
-// 🔥 **Register User with All Attributes**
-// 🔥 **Register User with createdAt & updatedAt**
+//Register User with All Attributes**
+//Register User with createdAt & updatedAt**
 export const registerUser = async (formData) => {
     const { name, email, password, registerType, phone, address, adharNumber } = formData;
 
@@ -272,14 +271,14 @@ export const registerUser = async (formData) => {
     }
 
     try {
-        // ✅ Register the user in Appwrite Authentication
+        //Register the user in Appwrite Authentication
         const user = await account.create(ID.unique(), email, password, name);
         console.log("✅ User registered:", user);
 
-        // ✅ Add `createdAt` and `updatedAt` fields
+        // Add `createdAt` and `updatedAt` fields
         const currentTime = new Date().toISOString();
 
-        // ✅ Store User Info in Users Collection
+        // Store User Info in Users Collection
         await databases.createDocument(
             DATABASE_ID,
             USERS_COLLECTION_ID,
@@ -288,12 +287,12 @@ export const registerUser = async (formData) => {
                 userId: user.$id,
                 email: email,
                 name: name,
-                registerType: registerType,   // 🔥 Store the register type
+                registerType: registerType,   // Store the register type
                 phone: phone,
                 address: address,
-                createdAt: currentTime,         // ✅ Added createdAt
+                createdAt: currentTime,         // Added createdAt
                 updatedAt: currentTime,
-                password: password,      // ✅ Added updatedAt
+                password: password,      // Added updatedAt
                 adharNumber: adharNumber
             }
         );
@@ -307,13 +306,13 @@ export const registerUser = async (formData) => {
 };
 
 
-// 🔥 **Login User with Admin Check**
+// Login User with Admin Check
 export const loginUser = async (email, password) => {
     try {
         const session = await account.createEmailPasswordSession(email, password);
         const currentUser = await account.get();
 
-        // ✅ Fetch the User's Profile from Users Collection
+        // Fetch the User's Profile from Users Collection
         const response = await databases.listDocuments(
             DATABASE_ID,
             USERS_COLLECTION_ID,
@@ -328,14 +327,14 @@ export const loginUser = async (email, password) => {
 
         console.log("✅ User logged in:", userProfile);
 
-        // ✅ Return User Data including `registerType`
+        // Return User Data including `registerType`
         return {
             session,
             user: {
                 id: currentUser.$id,
                 name: currentUser.name,
                 email: currentUser.email,
-                registerType: userProfile.registerType  // ✅ Return registerType
+                registerType: userProfile.registerType  // Return registerType
             }
         };
     } catch (error) {
@@ -346,7 +345,7 @@ export const loginUser = async (email, password) => {
 
 
 
-// 🔥 **Logout User**
+// Logout User
 export const logoutUser = async () => {
     try {
         await account.deleteSession("current");
@@ -358,7 +357,7 @@ export const logoutUser = async () => {
 };
 
 
-// 🔥 **Get User Profile**
+// Get User Profile
 export const getUserProfile = async () => {
     try {
         if (!(await validateSession())) {
@@ -388,7 +387,7 @@ export const getUserProfile = async () => {
 
 
 
-// ✅ 🔥 Get Current Farmer ID
+// Get Current Farmer ID
 const getCurrentFarmerId = async () => {
   try {
     const user = await account.get();
@@ -399,20 +398,20 @@ const getCurrentFarmerId = async () => {
   }
 };
 
-// ✅ 🔥 Fetch Bank Details
-// ✅ Fetch Bank Details by Farmer ID
+//  Fetch Bank Details
+// Fetch Bank Details by Farmer ID
 export const getBankDetails = async (farmerId) => {
   try {
-    // ✅ Ensure farmerId is defined
+    //  Ensure farmerId is defined
     if (!farmerId) {
       throw new Error("Farmer ID is missing.");
     }
 
-    // ✅ Use correct query syntax
+    // Use correct query syntax
     const response = await databases.listDocuments(
       DATABASE_ID,
       BANK_DETAILS,
-      [Query.equal("farmerId", farmerId)]   // 🔥 Proper query syntax
+      [Query.equal("farmerId", farmerId)]   
     );
 
     console.log("✅ Bank details fetched:", response.documents);
@@ -429,7 +428,7 @@ export const getBankDetails = async (farmerId) => {
     throw error;
   }
 };
-// ✅ 🔥 Add Bank Details
+//  Add Bank Details
 export const addBankDetails = async (bankData) => {
   try {
     const farmerId = await getCurrentFarmerId();
@@ -457,7 +456,7 @@ export const addBankDetails = async (bankData) => {
   }
 };
 
-// ✅ 🔥 Update Bank Details
+// Update Bank Details
 export const updateBankDetails = async (id, updatedData) => {
   try {
     const currentTime = new Date().toISOString();
@@ -481,7 +480,7 @@ export const updateBankDetails = async (id, updatedData) => {
   }
 };
 
-// ✅ 🔥 Delete Bank Details
+//  Delete Bank Details
 export const deleteBankDetails = async (id) => {
   try {
     await databases.deleteDocument(DATABASE_ID, BANK_DETAILS, id);
@@ -493,18 +492,18 @@ export const deleteBankDetails = async (id) => {
   }
 };
 
-// ✅ 🔥 Fetch Orders for Current Customer (with correct attributes)
+// Fetch Orders for Current Customer (with correct attributes)
 export const getCustomerOrders = async () => {
   try {
     const user = await getUserProfile();
-    const customerId = user?.userId;  // ✅ Get current customer ID
+    const customerId = user?.userId; 
 
 
     if (!customerId) {
       throw new Error("Failed to identify customer.");
     }
 
-    // ✅ Fetch orders filtered by customerId
+    // Fetch orders filtered by customerId
     const response = await databases.listDocuments(
       DATABASE_ID,
       ORDERS_COLLECTION_ID,
@@ -513,13 +512,13 @@ export const getCustomerOrders = async () => {
 
     console.log(`✅ Orders fetched for customer ${customerId}:`, response.documents);
     
-    // ✅ Map orders to match your collection attributes
+    // Map orders to match your collection attributes
     const orders = response.documents.map((order) => ({
       orderId: order.orderId,
       quantity: order.quantity,
       status: order.status,
       paymentStatus: order.paymentStatus,
-      products: order.products,           // ✅ Array of products
+      products: order.products,           
       totalPrice: order.totalPrice,
       orderStatus: order.orderStatus,
       shippingAddress: order.shippingAddress,
@@ -538,7 +537,6 @@ export const getCustomerOrders = async () => {
 
 
 
-// ✅ **Export all necessary modules**
 export {
     client,
     databases,

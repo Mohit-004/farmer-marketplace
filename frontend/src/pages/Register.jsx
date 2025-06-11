@@ -10,17 +10,17 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
-    registerType: "farmer",  // ✅ Default to Farmer
+    registerType: "farmer",  
     phone: "",
     address: "",
-    adharNumber: "",          // ✅ Aadhaar number field
-    razorpayLink: ""          // ✅ Razorpay.me link field (only for farmers)
+    adharNumber: "",          
+    razorpayLink: ""          
   });
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // ✅ Handle Form Changes
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -29,7 +29,7 @@ const Register = () => {
     }));
   };
 
-  // ✅ Handle Form Submission
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -40,14 +40,12 @@ const Register = () => {
       return;
     }
 
-    // ✅ Aadhaar validation
+  
     if (!/^\d{12}$/.test(formData.adharNumber)) {
       setError("❌ Aadhaar number must be 12 digits.");
       setLoading(false);
       return;
     }
-
-    // ✅ Razorpay Link validation for Farmers
     if (formData.registerType === "farmer" && !formData.razorpayLink) {
       setError("❌ Razorpay link is required for farmers.");
       setLoading(false);
@@ -86,7 +84,7 @@ const Register = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
 
-              {/* ✅ Name */}
+              {/* Name */}
               <div>
                 <label className="block text-gray-700">Name</label>
                 <input
@@ -100,7 +98,7 @@ const Register = () => {
                 />
               </div>
 
-              {/* ✅ Email */}
+              {/* Email */}
               <div>
                 <label className="block text-gray-700">Email</label>
                 <input
@@ -114,7 +112,7 @@ const Register = () => {
                 />
               </div>
 
-              {/* ✅ Password */}
+              {/* Password */}
               <div>
                 <label className="block text-gray-700">Password</label>
                 <input
@@ -128,7 +126,7 @@ const Register = () => {
                 />
               </div>
 
-              {/* ✅ Phone */}
+              {/* Phone */}
               <div>
                 <label className="block text-gray-700">Phone</label>
                 <input
@@ -142,7 +140,7 @@ const Register = () => {
                 />
               </div>
 
-              {/* ✅ Aadhaar Number */}
+              {/* Aadhaar Number */}
               <div className="col-span-2">
                 <label className="block text-gray-700">Aadhaar Number</label>
                 <input
@@ -156,7 +154,7 @@ const Register = () => {
                 />
               </div>
 
-              {/* ✅ Address */}
+              {/* Address */}
               <div className="col-span-2">
                 <label className="block text-gray-700">Address</label>
                 <input
@@ -170,7 +168,7 @@ const Register = () => {
                 />
               </div>
 
-              {/* ✅ Register Type */}
+              {/* Register Type */}
               <div className="col-span-2">
                 <label className="block text-gray-700">Register Type</label>
                 <select
@@ -184,7 +182,7 @@ const Register = () => {
                 </select>
               </div>
 
-              {/* ✅ Razorpay Link (Only for Farmers) */}
+              {/* Razorpay Link (Only for Farmers) */}
               {formData.registerType === "farmer" && (
                 <div className="col-span-2">
                   <label className="block text-gray-700">Razorpay.me Link</label>
@@ -204,7 +202,7 @@ const Register = () => {
               )}
             </div>
 
-            {/* ✅ Submit Button */}
+            {/* Submit Button */}
             <motion.button
               type="submit"
               whileHover={{ scale: 1.05 }}

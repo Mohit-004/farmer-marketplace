@@ -2,26 +2,23 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
   FaBox, FaCog, FaSignOutAlt, FaUserCircle, FaStore, FaChartLine, 
-  FaChevronRight, FaChevronLeft, FaUniversity  // ✅ Added Bank icon
+  FaChevronRight, FaChevronLeft, FaUniversity 
 } from "react-icons/fa";
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);  // ✅ Sidebar state
+  const [isOpen, setIsOpen] = useState(false);
 
-  // ✅ Toggle sidebar visibility
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
   return (
     <div className="relative h-screen">
-      {/* ✅ Sidebar Container */}
       <div
         className={`fixed inset-y-0 left-0 bg-blue-900 text-white z-40 transition-all duration-300 ease-in-out shadow-lg ${
           isOpen ? "w-72" : "w-16"
         }`}
       >
-        {/* ✅ Toggle Button */}
         <button
           onClick={toggleSidebar}
           className={`absolute top-1/2 -right-5 transform -translate-y-1/2 bg-blue-600 text-white p-2 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 z-50 ${
@@ -31,14 +28,12 @@ const Sidebar = () => {
           {isOpen ? <FaChevronLeft /> : <FaChevronRight />}
         </button>
 
-        {/* ✅ Sidebar Header */}
         <div className="p-4 border-b border-blue-700">
           <h1 className="text-2xl font-bold text-center">
             {isOpen ? "Farmer Panel" : "FP"}
           </h1>
         </div>
 
-        {/* ✅ Sidebar Navigation */}
         <nav className="mt-4">
           <Link
             to="/farmer"
@@ -69,7 +64,6 @@ const Sidebar = () => {
             <FaStore className="mr-3" />
             {isOpen && "Orders"}
           </Link>
-
 
           <Link
             to="/profile"

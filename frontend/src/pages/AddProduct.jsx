@@ -7,7 +7,7 @@ import { Query } from "appwrite";
 const AddProduct = () => {
   const navigate = useNavigate();
 
-  // ✅ Form State
+  
   const [productData, setProductData] = useState({
     title: "",
     description: "",
@@ -19,13 +19,13 @@ const AddProduct = () => {
     isFeatured: false,
   });
 
-  const [imageFile, setImageFile] = useState(null);         // ✅ Store image file object
-  const [imagePreview, setImagePreview] = useState("");     // ✅ Image preview
+  const [imageFile, setImageFile] = useState(null);         
+  const [imagePreview, setImagePreview] = useState("");     
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [categoryError, setCategoryError] = useState("");
 
-  // ✅ Fetch categories
+  
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -44,7 +44,7 @@ const AddProduct = () => {
     fetchCategories();
   }, []);
 
-  // ✅ Handle form field changes
+  
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setProductData((prevData) => ({
@@ -53,7 +53,7 @@ const AddProduct = () => {
     }));
   };
 
-  // ✅ Handle image file selection and preview
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 
@@ -65,9 +65,9 @@ const AddProduct = () => {
         return;
       }
 
-      setImageFile(file);   // ✅ Store the `File` object
+      setImageFile(file);   
 
-      // ✅ Preview the image
+      
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
@@ -76,11 +76,11 @@ const AddProduct = () => {
     }
   };
 
-  // ✅ Handle form submission
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ✅ Validate fields
+    
     if (!productData.title || !productData.price || !productData.category || !imageFile) {
       alert("Please fill all fields and upload an image.");
       return;
@@ -97,7 +97,7 @@ const AddProduct = () => {
         isFeatured: productData.isFeatured ? true : false,
       };
 
-      // ✅ Call `createProduct()` with image file
+      
       const newProduct = await createProduct(formattedData, imageFile);
       console.log("✅ Product Created:", newProduct);
 

@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getCategories, getProducts } from "../utils/appwrite";  // ✅ Import product fetch function
+import { getCategories, getProducts } from "../utils/appwrite";  
 
 const CategoryPage = () => {
-  const { slug } = useParams();  // ✅ Use slug instead of categoryName
+  const { slug } = useParams();  
   const [category, setCategory] = useState(null);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // ✅ Fetch category and its products
+ 
   useEffect(() => {
     const fetchCategoryAndProducts = async () => {
       try {
-        // 🔥 Fetch all categories
+        
         const categories = await getCategories();
 
-        // 🔥 Find the category by slug
         const selectedCategory = categories.find(
           (cat) => 
             cat.name.toLowerCase().replace(/ /g, "-") === slug
@@ -25,7 +24,7 @@ const CategoryPage = () => {
         if (selectedCategory) {
           setCategory(selectedCategory);
 
-          // ✅ Fetch products by category ID
+          
           const allProducts = await getProducts();
           const filteredProducts = allProducts.filter(
             (product) => product.category === selectedCategory.name
@@ -66,7 +65,6 @@ const CategoryPage = () => {
     <div className="container mx-auto p-6">
       <h1 className="text-4xl font-bold mb-8">{category.name}</h1>
 
-      {/* ✅ Display products vertically */}
       {products.length > 0 ? (
         <div className="flex flex-col gap-6">
           {products.map((product) => (
@@ -95,7 +93,6 @@ const CategoryPage = () => {
         <p className="text-center text-gray-600">No products available in this category.</p>
       )}
 
-      {/* ✅ Back Button */}
       <div className="mt-8">
         <Link
           to="/"

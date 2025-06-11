@@ -10,7 +10,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        // ✅ Validate the session first
+        //Validate the session first
         const session = await account.get();
         if (!session) {
           throw new Error("No active session found.");
@@ -18,14 +18,14 @@ const Profile = () => {
 
         console.log("✅ Session User ID:", session.$id);
 
-        // 🔥 First Query: Check by `userId`
+        //First Query: Check by `userId`
         let response = await databases.listDocuments(
           DATABASE_ID,
           USERS_COLLECTION_ID,
           [Query.equal("userId", session.$id)]
         );
 
-        // ✅ Fallback: Query by `email` if userId fails
+        //Fallback: Query by `email` if userId fails
         if (response.documents.length === 0) {
           console.warn("⚠️ No profile by userId. Trying fallback by email...");
           response = await databases.listDocuments(
@@ -35,7 +35,7 @@ const Profile = () => {
           );
         }
 
-        // ✅ Handle profile display
+        //Handle profile display
         if (response.documents.length > 0) {
           console.log("✅ Profile found:", response.documents[0]);
           setProfile(response.documents[0]);
@@ -57,14 +57,13 @@ const Profile = () => {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="container mx-auto p-6">
 
-        {/* ✅ Loading Spinner */}
+        
         {loading && (
           <div className="flex justify-center items-center h-96">
             <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
           </div>
         )}
 
-        {/* ✅ Error Display */}
         {!loading && error && (
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -76,7 +75,7 @@ const Profile = () => {
           </motion.div>
         )}
 
-        {/* ✅ Profile Display */}
+        {/* Profile Display */}
         {!loading && profile && (
           <AnimatePresence>
             <motion.div

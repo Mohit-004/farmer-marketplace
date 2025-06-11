@@ -12,10 +12,8 @@ const AdminCards = () => {
     const fetchUserCounts = async () => {
       try {
         const response = await databases.listDocuments(DATABASE_ID, USERS_COLLECTION_ID);
-
         const users = response.documents;
 
-        // 🔥 Filter users by type
         const customers = users.filter((user) => user.registerType === "customer");
         const farmers = users.filter((user) => user.registerType === "farmer");
 
@@ -35,7 +33,7 @@ const AdminCards = () => {
       <div className="bg-blue-500 text-white p-6 rounded-lg shadow-md flex items-center">
         <FaUser className="text-3xl mr-4" />
         <div>
-          <h2 className="text-2xl font-bold">{totalUsers-1}</h2>
+          <h2 className="text-2xl font-bold">{totalUsers - 1}</h2>
           <p>Total Users</p>
         </div>
       </div>

@@ -12,8 +12,8 @@ router.post("/add", async (req, res) => {
     } = req.body;
 
     const product = await databases.createDocument(
-      "YOUR_DATABASE_ID",     // Replace with your Appwrite database ID
-      "YOUR_COLLECTION_ID",    // Replace with your products collection ID
+      "YOUR_DATABASE_ID",     
+      "YOUR_COLLECTION_ID",    
       ID.unique(),
       {
         title, 

@@ -4,7 +4,7 @@ import { FaUser, FaSignOutAlt, FaHome, FaInfoCircle, FaList, FaCaretDown, FaSear
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { getCategories } from "../utils/appwrite";
-import logo from "../assets/logo.jpg";  // ✅ Import logo from assets
+import logo from "../assets/logo.jpg";
 
 const Navbar = () => {
   const { user, logout, registerType } = useContext(AuthContext);
@@ -13,7 +13,7 @@ const Navbar = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");  
+  const [searchQuery, setSearchQuery] = useState("");
 
   const dropdownRef = useRef(null);
   const categoryRef = useRef(null);
@@ -79,20 +79,15 @@ const Navbar = () => {
   return (
     <nav className="bg-gradient-to-r from-green-600 to-blue-500 shadow-lg sticky top-0 z-50">
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
-
-        {/* ✅ Logo & Navigation Section */}
         <div className="flex items-center space-x-6">
-
-          {/* ✅ Circular Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img 
               src={logo} 
               alt="Marketplace Logo" 
-              className="w-14 h-14 object-cover rounded-full border-4 border-white shadow-lg hover:shadow-xl transition"  // ✅ Styled Circular Logo
+              className="w-14 h-14 object-cover rounded-full border-4 border-white shadow-lg hover:shadow-xl transition"
             />
           </Link>
 
-          {/* ✅ Navigation Links */}
           <div className="hidden md:flex items-center space-x-4">
             <Link to="/" className="flex items-center text-lg text-white hover:text-yellow-300 transition">
               <FaHome className="mr-1" /> Home
@@ -101,7 +96,6 @@ const Navbar = () => {
               <FaInfoCircle className="mr-1" /> About
             </Link>
 
-            {/* ✅ Categories Dropdown */}
             <div className="relative" ref={categoryRef}>
               <button
                 onClick={() => setIsCategoryOpen(!isCategoryOpen)}
@@ -144,7 +138,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* ✅ Search Bar */}
         <form onSubmit={handleSearch} className="relative w-1/3">
           <input
             type="text"
@@ -156,10 +149,7 @@ const Navbar = () => {
           <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
         </form>
 
-        {/* ✅ User Profile and Dashboard */}
         <div className="flex items-center space-x-4">
-
-          {/* ✅ Cart Icon */}
           <Link to="/cart" className="text-white hover:text-yellow-300 transition">
             <FaShoppingCart className="text-2xl" />
           </Link>

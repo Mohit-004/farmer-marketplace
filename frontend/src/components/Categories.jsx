@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { getProducts } from "../utils/appwrite";   // ✅ Import Appwrite function
+import { getProducts } from "../utils/appwrite";
 
 const Categories = () => {
     const { categoryName } = useParams();
@@ -9,13 +9,10 @@ const Categories = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    // ✅ Fetch products based on the selected category
     useEffect(() => {
         const fetchCategoryProducts = async () => {
             try {
                 const allProducts = await getProducts();
-                
-                // ✅ Filter products by category name (case-insensitive)
                 const filteredProducts = allProducts.filter(
                     (product) => product.category?.toLowerCase() === categoryName?.toLowerCase()
                 );
@@ -36,7 +33,6 @@ const Categories = () => {
         fetchCategoryProducts();
     }, [categoryName]);
 
-    // ✅ Display loading spinner while fetching data
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
@@ -45,10 +41,9 @@ const Categories = () => {
         );
     }
 
-    // ✅ Display error message if no products found
     if (error) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
+            <div className="min-h-screen flex flex-col items-center justify-center">
                 <h1 className="text-3xl font-bold text-red-500">{error}</h1>
                 <button
                     onClick={() => navigate(-1)}
@@ -63,8 +58,6 @@ const Categories = () => {
     return (
         <div className="container mx-auto p-6">
             <h1 className="text-4xl font-bold mb-8">{categoryName}</h1>
-
-            {/* ✅ Horizontal Scroll Section */}
             <div className="flex overflow-x-auto space-x-6 p-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                 {products.map((product) => (
                     <div
@@ -78,11 +71,9 @@ const Categories = () => {
                                 className="w-full h-56 object-cover rounded-t-lg"
                             />
                         </Link>
-
                         <div className="p-4">
                             <h3 className="text-xl font-bold">{product.title}</h3>
                             <p className="text-lg font-semibold mt-2 text-green-600">₹{product.price}</p>
-
                             <Link to={`/product/${product.$id}`}>
                                 <button className="mt-4 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition">
                                     View Details
@@ -92,8 +83,6 @@ const Categories = () => {
                     </div>
                 ))}
             </div>
-
-            {/* ✅ Back Button */}
             <div className="mt-8">
                 <Link
                     to="/"

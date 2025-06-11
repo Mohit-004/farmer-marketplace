@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { getUserProfile } from "../utils/appwrite";
 import { Link } from "react-router-dom";
-import FarmerSidebar from "../components/FarmerSidebar";  // ✅ Import FarmerSidebar component
+import FarmerSidebar from "../components/FarmerSidebar";  
 
-import { FaBox, FaCog, FaSignOutAlt, FaUserCircle, FaStore, FaChartLine } from "react-icons/fa";  // ✅ Sidebar icons
+import { FaBox, FaCog, FaSignOutAlt, FaUserCircle, FaStore, FaChartLine } from "react-icons/fa";  
 
 const FarmerDashboard = () => {
   const [user, setUser] = useState(null);
@@ -36,16 +36,16 @@ const FarmerDashboard = () => {
     <div className="flex min-h-screen bg-gray-100">
      
       
-      {/* ✅ Main Content */}
+      {/* Main Content */}
       <main className="flex-1 p-8 overflow-y-auto">
 
-        {/* ✅ Header */}
+        {/* Header */}
         <div className="flex justify-between items-center mb-8 sticky top-0 bg-white shadow-md p-4 rounded-lg z-10">
           <h1 className="text-4xl font-bold text-gray-800">Dashboard</h1>
           
         </div>
 
-        {/* ✅ Welcome Section */}
+        {/* Welcome Section */}
         {loading ? (
           <p className="text-center">Loading...</p>
         ) : error ? (
@@ -61,7 +61,7 @@ const FarmerDashboard = () => {
           </div>
         )}
 
-        {/* ✅ Quick Access Cards */}
+        {/* Quick Access Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Link
             to="/farmer/manage-products"

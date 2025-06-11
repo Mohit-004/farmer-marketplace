@@ -7,10 +7,9 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [registerType, setRegisterType] = useState(null);  
-  const [loading, setLoading] = useState(true);   // ✅ Add loading state
+  const [loading, setLoading] = useState(true);   
   const navigate = useNavigate();
 
-  // ✅ Fetch user profile on initial load
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -30,7 +29,7 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, []);
 
-  // ✅ Function to redirect users based on role
+  
   const redirectToDashboard = (role) => {
     switch (role) {
       case "admin":
@@ -47,18 +46,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ✅ Login function with immediate profile update
   const login = async (email, password) => {
     try {
       const userData = await loginUser(email, password);
       
-      // ✅ Immediately fetch the latest user profile after login
+     
       const updatedUser = await getUserProfile();
       
       setUser(updatedUser);
       setRegisterType(updatedUser.registerType);  
       
-      // ✅ Redirect immediately
+      
       redirectToDashboard(updatedUser.registerType);
 
     } catch (error) {
@@ -67,7 +65,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ✅ Logout function
+ 
   const logout = async () => {
     await logoutUser();
     setUser(null);

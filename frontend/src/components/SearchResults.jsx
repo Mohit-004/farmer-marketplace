@@ -8,7 +8,7 @@ const SearchResults = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // ✅ Get search query from URL
+
   const searchQuery = new URLSearchParams(location.search).get("q");
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const SearchResults = () => {
           DATABASE_ID,
           PRODUCTS_COLLECTION_ID,
           [
-            // ✅ Wrap the Query.or() in an array
+
             Query.or(
               [Query.contains("title", searchQuery),        // ✅ Match in title
               Query.contains("description", searchQuery),   // ✅ Match in description

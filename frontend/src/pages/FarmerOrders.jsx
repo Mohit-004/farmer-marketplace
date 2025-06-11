@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getFarmerOrders } from "../utils/appwrite";
-import Sidebar from "../components/FarmerSidebar";  // ✅ Updated Sidebar Import
+import Sidebar from "../components/FarmerSidebar";
 import {
   FaBox, FaUserCircle, FaMoneyBillWave, FaTruck, FaCalendarAlt, FaCheckCircle, FaTimesCircle,
 } from "react-icons/fa";
@@ -28,15 +28,15 @@ const FarmerOrders = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-GB"); // Format: DD/MM/YYYY
+    return date.toLocaleDateString("en-GB"); 
   };
 
   return (
     <div className="flex min-h-screen">
-      {/* ✅ Sidebar */}
+      
       <Sidebar />
 
-      {/* ✅ Main Content */}
+      {/* Main Content */}
       <main className="flex-1 p-8 transition-all duration-300 ml-16 ">
         <h1 className="text-4xl font-bold mb-8 text-gray-800">Farmer Orders</h1>
 
@@ -69,7 +69,7 @@ const FarmerOrders = () => {
                       <td className="p-4">{order.orderId}</td>
                       <td className="p-4">{order.customerId}</td>
 
-                      {/* ✅ Displaying products */}
+                      {/* Displaying products */}
                       <td className="p-4">
                         {order.products.map((product, index) => (
                           <div key={index} className="flex items-center gap-2">
@@ -82,7 +82,7 @@ const FarmerOrders = () => {
                       <td className="p-4">{order.quantity}</td>
                       <td className="p-4 font-bold">₹{order.totalPrice.toFixed(2)}</td>
 
-                      {/* ✅ Payment Status with badge */}
+                      {/* Payment Status with badge */}
                       <td className="p-4">
                         {order.paymentStatus === "Paid" ? (
                           <span className="inline-flex items-center px-3 py-1 rounded bg-green-500 text-white">
@@ -95,7 +95,7 @@ const FarmerOrders = () => {
                         )}
                       </td>
 
-                      {/* ✅ Order Status */}
+                      {/* Order Status */}
                       <td className="p-4">
                         {order.orderStatus === "Shipped" ? (
                           <span className="inline-flex items-center px-3 py-1 rounded bg-blue-500 text-white">

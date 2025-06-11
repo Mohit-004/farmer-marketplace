@@ -1,8 +1,8 @@
 import React, { Suspense, lazy, useEffect, useState } from "react";
-import { getCategories, getProducts } from "../utils/appwrite";  // ✅ Appwrite API
+import { getCategories, getProducts } from "../utils/appwrite";  
 import { Link } from "react-router-dom";
 
-// ✅ Lazy load components for performance optimization
+
 const Navbar = lazy(() => import("../components/Navbar"));
 const Banner = lazy(() => import("../components/Banner"));
 const Events = lazy(() => import("../components/Events"));
@@ -40,17 +40,17 @@ const Home = () => {
   return (
     <div className="container mx-auto p-4">
 
-      {/* ✅ Banner */}
+      {/* Banner */}
       <Suspense fallback={<div className="text-center p-6">Loading Banner...</div>}>
         <Banner />
       </Suspense>
 
-      {/* ✅ Events */}
+      {/* Events */}
       <Suspense fallback={<div className="text-center p-6">Loading Events...</div>}>
         <Events />
       </Suspense>
 
-      {/* ✅ Categories with Horizontal Scrollable Rows */}
+      {/* Categories with Horizontal Scrollable Rows */}
       <div className="mt-8">
         {categories.length > 0 ? (
           categories.map((category) => {
@@ -71,15 +71,15 @@ const Home = () => {
                           className="min-w-[300px] border rounded-lg shadow-lg hover:shadow-xl transition duration-300 bg-white"
                         >
                           <Link to={`/product/${product.$id}`}>
-                            {/* ✅ Log Product and File ID */}
+                            {/* Log Product and File ID */}
                             {console.log(`📦 Product: ${product.title}`, product)}
 
-                            {/* ✅ Display Image using Dynamic URL */}
+                            {/* Display Image using Dynamic URL */}
                             <img
-                              src={product.fileId || "/placeholder.png"}   // Use dynamic URL
+                              src={product.fileId || "/placeholder.png"}  
                               alt={product.title || "Product Image"}
                               className="w-full h-40 object-cover rounded-t-lg"
-                              onError={(e) => e.target.src = "/placeholder.png"}  // Fallback to placeholder
+                              onError={(e) => e.target.src = "/placeholder.png"}  
                             />
                           </Link>
 
@@ -88,7 +88,7 @@ const Home = () => {
                             <p className="text-gray-600 line-clamp-2">{product.description || "No description available"}</p>
                             <p className="text-green-600 font-bold text-lg mt-2">₹{product.price || "N/A"}</p>
 
-                            {/* ✅ View Details Button */}
+                            {/* View Details Button */}
                             <div className="mt-4">
                               <Link
                                 to={`/product/${product.$id}`}

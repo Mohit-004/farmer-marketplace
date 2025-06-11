@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 const FarmerBankDetails = () => {
   const navigate = useNavigate();
 
-  // ✅ Form State
   const [bankDetails, setBankDetails] = useState({
     accountNumber: "",
     ifscCode: "",
@@ -15,9 +14,8 @@ const FarmerBankDetails = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const farmerId = localStorage.getItem("farmerId");   // Store farmerId in local storage after login
+  const farmerId = localStorage.getItem("farmerId");
 
-  // ✅ Fetch Bank Details if Already Exist
   useEffect(() => {
     const fetchBankDetails = async () => {
       try {
@@ -37,20 +35,18 @@ const FarmerBankDetails = () => {
           });
         }
       } catch (error) {
-        console.error("❌ Error fetching bank details:", error);
+        console.error("Error fetching bank details:", error);
       }
     };
 
     fetchBankDetails();
   }, [farmerId]);
 
-  // ✅ Handle Form Changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setBankDetails((prev) => ({ ...prev, [name]: value }));
   };
 
-  // ✅ Submit Bank Details
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -66,11 +62,11 @@ const FarmerBankDetails = () => {
         }
       );
 
-      alert("✅ Bank details saved successfully!");
+      alert("Bank details saved successfully!");
       navigate("/farmer/dashboard");
 
     } catch (error) {
-      console.error("❌ Error saving bank details:", error);
+      console.error("Error saving bank details:", error);
       alert("Failed to save bank details.");
     } finally {
       setLoading(false);

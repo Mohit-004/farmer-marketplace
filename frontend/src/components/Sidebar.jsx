@@ -4,34 +4,28 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 const Sidebar = () => {
-  const { logout } = useContext(AuthContext);       // ✅ Auth context for logout
+  const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const location = useLocation();                   // ✅ Current route location
+  const location = useLocation();
 
-  // ✅ Logout handler
   const handleLogout = async () => {
     try {
       await logout();
-      navigate("/login");                          // ✅ Redirect to login page
+      navigate("/login");
     } catch (error) {
       console.error("❌ Logout failed:", error);
     }
   };
 
-  // ✅ Function to check if the current route is active
   const isActive = (path) => location.pathname === path;
 
   return (
     <div className="w-64 h-screen bg-gray-900 text-white flex flex-col shadow-lg">
-
-      {/* ✅ Admin Panel Header */}
       <div className="p-5 text-3xl font-bold bg-blue-600">
         Admin Panel
       </div>
 
       <nav className="flex-1">
-
-        {/* ✅ Dashboard */}
         <Link 
           to="/admin/dashboard" 
           className={`flex items-center px-5 py-3 transition duration-300 ${
@@ -42,7 +36,6 @@ const Sidebar = () => {
           <span>Dashboard</span>
         </Link>
 
-        {/* ✅ Manage Users */}
         <Link 
           to="/admin/users" 
           className={`flex items-center px-5 py-3 transition duration-300 ${
@@ -53,7 +46,6 @@ const Sidebar = () => {
           <span>Manage Users</span>
         </Link>
 
-        {/* ✅ Manage Categories */}
         <Link 
           to="/admin/categories" 
           className={`flex items-center px-5 py-3 transition duration-300 ${
@@ -64,7 +56,6 @@ const Sidebar = () => {
           <span>Manage Categories</span>
         </Link>
 
-        {/* ✅ Manage Products */}
         <Link 
           to="/admin/products" 
           className={`flex items-center px-5 py-3 transition duration-300 ${
@@ -75,7 +66,6 @@ const Sidebar = () => {
           <span>Manage Products</span>
         </Link>
 
-        {/* ✅ Orders */}
         <Link 
           to="/admin/orders" 
           className={`flex items-center px-5 py-3 transition duration-300 ${
@@ -86,7 +76,6 @@ const Sidebar = () => {
           <span>Orders</span>
         </Link>
 
-        {/* ✅ Settings */}
         <Link 
           to="/admin/settings" 
           className={`flex items-center px-5 py-3 transition duration-300 ${
@@ -96,10 +85,8 @@ const Sidebar = () => {
           <FaCog className="mr-3" />
           <span>Settings</span>
         </Link>
-
       </nav>
 
-      {/* ✅ Logout Button */}
       <button
         onClick={handleLogout}
         className="bg-red-600 hover:bg-red-700 px-5 py-3 flex items-center justify-center transition duration-300"
@@ -107,7 +94,6 @@ const Sidebar = () => {
         <FaSignOutAlt className="mr-2" />
         <span>Logout</span>
       </button>
-
     </div>
   );
 };

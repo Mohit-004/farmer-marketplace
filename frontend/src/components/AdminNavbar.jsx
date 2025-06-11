@@ -10,9 +10,8 @@ const Sidebar = () => {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false);  // ✅ Sidebar state
+  const [isOpen, setIsOpen] = useState(false);
 
-  // ✅ Logout handler
   const handleLogout = async () => {
     try {
       await logout();
@@ -22,24 +21,19 @@ const Sidebar = () => {
     }
   };
 
-  // ✅ Check if the current route is active
   const isActive = (path) => location.pathname === path;
 
-  // ✅ Toggle sidebar function
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
   return (
     <div className="relative">
-
-      {/* ✅ Floating Sidebar */}
       <div
         className={`fixed top-0 left-0 h-full bg-gray-900 text-white shadow-2xl z-50 transition-all duration-300 ease-in-out ${
           isOpen ? "w-72" : "w-20"
         }`}
       >
-        {/* ✅ Centered Sidebar Header */}
         <div className="flex justify-center items-center p-5 bg-blue-600">
           {isOpen ? (
             <h1 className="text-2xl font-bold text-center">Admin Panel</h1>
@@ -53,10 +47,7 @@ const Sidebar = () => {
           </button>
         </div>
 
-        {/* ✅ Sidebar Navigation */}
         <nav className="mt-4">
-          
-          {/* ✅ Dashboard */}
           <Link
             to="/admin/dashboard"
             className={`flex items-center p-4 hover:bg-blue-500 transition ${
@@ -67,7 +58,6 @@ const Sidebar = () => {
             {isOpen && <span className="ml-3 transition-opacity duration-300">Dashboard</span>}
           </Link>
 
-          {/* ✅ Manage Users */}
           <Link
             to="/admin/users"
             className={`flex items-center p-4 hover:bg-blue-500 transition ${
@@ -78,7 +68,6 @@ const Sidebar = () => {
             {isOpen && <span className="ml-3 transition-opacity duration-300">Manage Users</span>}
           </Link>
 
-          {/* ✅ Manage Categories */}
           <Link
             to="/admin/categories"
             className={`flex items-center p-4 hover:bg-blue-500 transition ${
@@ -89,7 +78,6 @@ const Sidebar = () => {
             {isOpen && <span className="ml-3 transition-opacity duration-300">Manage Categories</span>}
           </Link>
 
-          {/* ✅ Manage Products */}
           <Link
             to="/admin/products"
             className={`flex items-center p-4 hover:bg-blue-500 transition ${
@@ -100,7 +88,6 @@ const Sidebar = () => {
             {isOpen && <span className="ml-3 transition-opacity duration-300">Manage Products</span>}
           </Link>
 
-          {/* ✅ Orders */}
           <Link
             to="/admin/orders"
             className={`flex items-center p-4 hover:bg-blue-500 transition ${
@@ -111,7 +98,6 @@ const Sidebar = () => {
             {isOpen && <span className="ml-3 transition-opacity duration-300">Orders</span>}
           </Link>
 
-          {/* ✅ Settings */}
           <Link
             to="/admin/settings"
             className={`flex items-center p-4 hover:bg-blue-500 transition ${
@@ -123,7 +109,6 @@ const Sidebar = () => {
           </Link>
         </nav>
 
-        {/* ✅ Logout Button */}
         <button
           onClick={handleLogout}
           className="w-full flex items-center p-4 bg-red-600 hover:bg-red-700 transition duration-300"
@@ -132,7 +117,6 @@ const Sidebar = () => {
           {isOpen && <span className="ml-3 transition-opacity duration-300">Logout</span>}
         </button>
       </div>
-
     </div>
   );
 };

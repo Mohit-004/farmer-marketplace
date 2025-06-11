@@ -1,22 +1,22 @@
 import React, { Suspense, lazy, useEffect, useState } from "react";
-import { getCategories, getProducts } from "../utils/appwrite";  // ✅ Appwrite API functions
+import { getCategories, getProducts } from "../utils/appwrite";  
 import { Link } from "react-router-dom";
 
-// ✅ Lazy load components for performance
+
 const Navbar = lazy(() => import("../components/Navbar"));
 const Banner = lazy(() => import("../components/Banner"));
 const Events = lazy(() => import("../components/Events"));
 
 const Home = () => {
-  const [categories, setCategories] = useState([]);   // ✅ Categories state
-  const [products, setProducts] = useState([]);       // ✅ Products state
+  const [categories, setCategories] = useState([]);   
+  const [products, setProducts] = useState([]);       
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const categoryData = await getCategories();     // ✅ Fetch categories
-        const productData = await getProducts();        // ✅ Fetch products
+        const categoryData = await getCategories();     
+        const productData = await getProducts();       
 
         console.log("✅ Categories fetched:", categoryData);
         console.log("✅ Products fetched:", productData);
@@ -39,22 +39,22 @@ const Home = () => {
   return (
     <div className="container mx-auto p-4">
 
-      {/* ✅ Banner */}
+      {/* Banner */}
       <Suspense fallback={<div className="text-center p-6">Loading Banner...</div>}>
         <Banner />
       </Suspense>
 
-      {/* ✅ Events */}
+      {/* Events */}
       <Suspense fallback={<div className="text-center p-6">Loading Events...</div>}>
         <Events />
       </Suspense>
 
-      {/* ✅ Categories with Horizontally Scrollable Rows */}
+      {/* Categories with Horizontally Scrollable Rows */}
       <div className="mt-8">
         {categories.length > 0 ? (
           categories.map((category) => {
             
-            // ✅ Filter products by `category` NAME (case-insensitive & trimmed)
+            // Filter products by `category` NAME (case-insensitive & trimmed)
             const categoryProducts = products.filter(
               (product) =>
                 product.category?.toLowerCase().trim() === category.name?.toLowerCase().trim()
@@ -69,12 +69,12 @@ const Home = () => {
                     <div className="flex gap-6">
                       {categoryProducts.map((product) => (
                         <div
-                          key={product.$id}    // ✅ Use `$id` instead of `id`
+                          key={product.$id}    
                           className="min-w-[300px] border rounded-lg shadow-md p-4 hover:shadow-lg transition duration-300"
                         >
-                          <Link to={`/product/${product.$id}`}>   {/* ✅ Use `$id` */}
+                          <Link to={`/product/${product.$id}`}>  
                             <img
-                              src={product.image || "/placeholder.png"}   // ✅ Display image or placeholder
+                              src={product.image || "/placeholder.png"}
                               alt={product.title || "Product Image"}
                               className="w-full h-40 object-cover rounded-t-lg"
                             />

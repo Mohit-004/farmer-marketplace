@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const About = () => {
-  const navigate = useNavigate();   // ✅ Initialize navigate
+  const navigate = useNavigate();   
 
   const handleNavigate = () => {
-    navigate("/categories");        // ✅ Navigate to categories page
+    navigate("/categories");      
   };
 
   return (

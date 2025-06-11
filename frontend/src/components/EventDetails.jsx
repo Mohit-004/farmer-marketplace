@@ -33,21 +33,15 @@ const EventDetails = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-4xl w-full">
-
-        {/* ✅ Event Image */}
         <img
           src={event.image}
           alt={event.title}
           className="w-full h-96 object-cover rounded-lg mb-6"
         />
-
-        {/* ✅ Event Details */}
         <h1 className="text-4xl font-bold mb-4">{event.title}</h1>
         <p className="text-gray-600 mb-4"><strong>Date:</strong> {event.date}</p>
         <p className="text-gray-600 mb-4"><strong>Location:</strong> {event.location}</p>
         <p className="text-gray-700 mb-6">{event.description}</p>
-
-        {/* ✅ Navigation Buttons */}
         <div className="flex justify-between">
           <button
             onClick={() => navigate(-1)}
@@ -55,7 +49,6 @@ const EventDetails = () => {
           >
             Go Back
           </button>
-
           <button
             onClick={() => alert("✅ Registered successfully!")}
             className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition"

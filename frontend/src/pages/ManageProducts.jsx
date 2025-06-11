@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { databases, DATABASE_ID, PRODUCTS_COLLECTION_ID, getUserProfile } from "../utils/appwrite";
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
-import { Query } from "appwrite";  // ✅ Import Query for filtering
-import Sidebar from "../components/FarmerSidebar";  // ✅ Use sliding sidebar
+import { Query } from "appwrite";  
+import Sidebar from "../components/FarmerSidebar";  
 
 const ManageProducts = () => {
   const [products, setProducts] = useState([]);
@@ -11,7 +11,7 @@ const ManageProducts = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // ✅ Fetch only current farmer's products
+
   useEffect(() => {
     const fetchFarmerProducts = async () => {
       setLoading(true);
@@ -24,11 +24,11 @@ const ManageProducts = () => {
           return;
         }
 
-        // ✅ Filter products by farmerId
+        //Filter products by farmerId
         const response = await databases.listDocuments(
           DATABASE_ID,
           PRODUCTS_COLLECTION_ID,
-          [Query.equal("farmerId", farmerId)]   // ✅ Filter by farmerId
+          [Query.equal("farmerId", farmerId)]   
         );
 
         setProducts(response.documents);
@@ -43,13 +43,13 @@ const ManageProducts = () => {
     fetchFarmerProducts();
   }, []);
 
-  // ✅ Open delete confirmation modal
+  
   const openDeleteModal = (id) => {
     setDeleteId(id);
     setIsModalOpen(true);
   };
 
-  // ✅ Handle delete product
+ 
   const handleDelete = async () => {
     if (!deleteId) return;
 
@@ -68,10 +68,10 @@ const ManageProducts = () => {
 
   return (
     <div className="flex min-h-screen ml-12">
-      {/* ✅ Sidebar */}
+      {/* Sidebar */}
       <Sidebar />
 
-      {/* ✅ Main Content with Padding */}
+  
       <main className="flex-1 p-8 transition-all duration-300 ml-28">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-gray-800">Manage Products</h1>
@@ -140,7 +140,7 @@ const ManageProducts = () => {
           </div>
         )}
 
-        {/* ✅ Delete Confirmation Modal */}
+        {/* Delete Confirmation Modal */}
         {isModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white rounded-lg p-6 w-96 shadow-lg">

@@ -26,14 +26,14 @@ import EventDetails from "./components/EventDetails";
 import SearchResults from "./components/SearchResults";
 
 
-// ✅ Import the FarmerNavbar
+// Import the FarmerNavbar
 import FarmerNavbar from "./components/FarmerNavbar";  
 
 const App = () => {
   const { user } = useContext(AuthContext);
   const location = useLocation();  
 
-  // ✅ Check if the current route is for admin or farmer
+  // Check if the current route is for admin or farmer
   const isAdminRoute = location.pathname.startsWith('/admin');
   const isFarmerRoute = location.pathname.startsWith("/farmer");
 
@@ -41,20 +41,20 @@ const App = () => {
     <>
       <div className="min-h-screen flex flex-col">
 
-        {/* ✅ Conditional Navbar Rendering */}
+        {/* onditional Navbar Rendering */}
         {!isAdminRoute && !isFarmerRoute && <Navbar />}      {/* Default Navbar */}
         {isFarmerRoute && <FarmerNavbar />}                   {/* Farmer Navbar */}
 
         <div className="flex-1">
           <Routes>
 
-            {/* ✅ Public Routes */}
+            {/* Public Routes */}
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/about" element={<About />} />
 
-            {/* ✅ Product Routes */}
+            {/* Product Routes */}
             <Route path="/products" element={<ProductList />} />
             <Route path="/category/:slug" element={<CategoryPage />} />
             <Route path="/product/:productId" element={<ProductDetails />} />
@@ -65,13 +65,13 @@ const App = () => {
             
 
 
-            {/* ✅ Protected Routes */}
+            {/* Protected Routes */}
             <Route
               path="/profile"
               element={user ? <Profile /> : <Navigate to="/login" />}
             />
 
-            {/* ✅ Farmer Routes */}
+            {/* Farmer Routes */}
             <Route path="/farmer" element={<FarmerDashboard />} />
             <Route path="/farmer/manage-products" element={<ManageProducts />} />  
             
@@ -79,7 +79,7 @@ const App = () => {
             <Route path="/farmer/add-product" element={<AddProduct />} />
             <Route path="/place-order/:productId" element={<PlaceOrder />} /> 
 
-            {/* ✅ Admin Routes */}
+            {/* Admin Routes */}
             <Route
               path="/admin/*"
               element={
@@ -98,12 +98,11 @@ const App = () => {
               }
             />
 
-            {/* ✅ Fallback Route */}
+            {/* Fallback Route */}
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>
 
-        {/* ✅ Show Footer only on public routes */}
         {!isAdminRoute && !isFarmerRoute && <Footer />}  
       </div>
     </>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { databases, DATABASE_ID, PRODUCTS_COLLECTION_ID, account } from "../utils/appwrite";  // ✅ Import `account` for auth check
+import { databases, DATABASE_ID, PRODUCTS_COLLECTION_ID, account } from "../utils/appwrite"; 
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -8,7 +8,7 @@ const ProductDetails = () => {
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);  // ✅ Track login status
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -30,10 +30,10 @@ const ProductDetails = () => {
     const checkAuth = async () => {
       try {
         const user = await account.get();
-        setIsAuthenticated(true);  // ✅ User is logged in
+        setIsAuthenticated(true);  
         console.log("✅ User logged in:", user);
       } catch {
-        setIsAuthenticated(false);  // ❌ User is not logged in
+        setIsAuthenticated(false); 
       }
     };
 
@@ -59,13 +59,11 @@ const ProductDetails = () => {
     );
   }
 
-  // ✅ Handle "Buy Now" click
+
   const handleBuyNow = () => {
     if (!isAuthenticated) {
-      // 🔥 Redirect to login if not logged in
       navigate("/login");
     } else {
-      // 🔥 Proceed to place order if logged in
       navigate(`/place-order/${productId}`, { state: { product } });
     }
   };
@@ -75,7 +73,7 @@ const ProductDetails = () => {
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-4xl w-full">
 
         <div className="flex gap-8">
-          {/* ✅ Image Section */}
+          {/* Image Section */}
           <div className="w-1/2">
             <img
               src={product.fileId || "/placeholder.png"}
@@ -85,7 +83,7 @@ const ProductDetails = () => {
             />
           </div>
 
-          {/* ✅ Details Section */}
+          {/* Details Section */}
           <div className="w-1/2">
             <h1 className="text-4xl font-bold mb-4">{product.title}</h1>
             <p className="text-gray-600 mb-4">{product.description}</p>
@@ -112,7 +110,6 @@ const ProductDetails = () => {
               <strong>Rating:</strong> {product.rating || "N/A"}
             </p>
 
-            {/* ✅ Buttons */}
             <div className="mt-6 flex gap-4">
               <button
                 onClick={handleBuyNow}

@@ -15,7 +15,7 @@ const EditProduct = () => {
       try {
         const product = await getProductById(id);
         setProductData(product);
-        setImagePreview(product.image || "");    // ✅ Load existing image
+        setImagePreview(product.image || "");    
       } catch (error) {
         console.error("Error fetching product:", error);
         navigate("/dashboard");
@@ -63,7 +63,7 @@ const EditProduct = () => {
 
       <form onSubmit={handleSubmit} className="space-y-4">
 
-        {/* ✅ Title */}
+        {/* Title */}
         <input
           type="text"
           name="title"
@@ -74,7 +74,7 @@ const EditProduct = () => {
           className="w-full border p-2"
         />
 
-        {/* ✅ Image Upload */}
+        {/* Image Upload */}
         <div>
           <input type="file" accept="image/*" onChange={handleImageChange} />
           {imagePreview && (
